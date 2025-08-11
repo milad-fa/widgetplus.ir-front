@@ -1,0 +1,1683 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ویجت پلاس - انیمیشن تعاملی برای گوشی شما</title>
+    <meta name="description"
+          content="ویجت پلاس - برنامه انیمیشن تعاملی که یکنواختی گوشی شما را از بین می‌برد. با 50+ انیمیشن متنوع و کنترل کامل.">
+    <meta name="keywords" content="ویجت پلاس, انیمیشن موبایل, برنامه اندروید, ویجت, انیمیشن تعاملی">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" rel="stylesheet">
+
+    <meta property="og:title" content="ویجت پلاس - انیمیشن تعاملی برای گوشی">
+    <meta property="og:description" content="تیم متخصص ویجت پلاس: علی محمدی، سارا احمدی، حسین رضایی، مریم کریمی">
+    <meta property="og:image" content="team-photo.jpg">
+    <meta name="author" content="تیم ویجت پلاس">
+
+    <script type="application/ld+json">
+        {
+            "@context": "https://schema.org",
+            "@type": "Organization",
+            "name": "ویجت پلاس",
+            "url": "https://widgetplus.ir",
+            "employee": [
+                {
+                    "@type": "Person",
+                    "name": "علی محمدی",
+                    "jobTitle": "توسعه‌دهنده اندروید",
+                    "image": "team-1.jpg"
+                },
+                {
+                    "@type": "Person",
+                    "name": "سارا احمدی",
+                    "jobTitle": "طراح UI/UX",
+                    "image": "team-2.jpg"
+                }
+            ]
+        }
+    </script>
+
+    <style>
+        @import url('https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css');
+        @import url('https://fonts.googleapis.com/css2?family=Comfortaa:wght@300;400;700&family=Poppins:wght@300;400;600;700;800&display=swap');
+
+        * {
+            font-family: 'Vazirmatn', sans-serif !important;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html, body {
+            overflow-x: hidden;
+            width: 100%;
+            max-width: 100%;
+        }
+
+        .fancy-font {
+            font-family: 'Comfortaa', 'Vazirmatn', sans-serif !important;
+        }
+
+        .english-font {
+            font-family: 'Poppins', sans-serif !important;
+        }
+
+        :root {
+            --primary-pink: #FF6B9D;
+            --secondary-purple: #C44569;
+            --accent-orange: #FF8C42;
+            --accent-coral: #FF7043;
+            --accent-mint: #26D0CE;
+            --accent-yellow: #FDD835;
+            --accent-green: #4CAF50;
+            --light-bg: #FEFEFE;
+            --warm-bg: #FFF8F3;
+            --card-bg: #FFFFFF;
+            --text-dark: #2D3436;
+            --text-medium: #636E72;
+            --text-light: #ffffff;
+            --gradient-main: linear-gradient(135deg, #FF6B9D 0%, #C44569 50%, #FF8C42 100%);
+            --gradient-warm: linear-gradient(135deg, #FDD835 0%, #FF8C42 50%, #FF6B9D 100%);
+            --gradient-fresh: linear-gradient(135deg, #26D0CE 0%, #4CAF50 100%);
+            --gradient-card: linear-gradient(135deg, #FFFFFF 0%, #FFF8F3 100%);
+            --shadow-soft: 0 8px 32px rgba(255, 107, 157, 0.15);
+            --shadow-hover: 0 16px 48px rgba(255, 107, 157, 0.25);
+        }
+
+        .loading-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: var(--gradient-main);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            transition: opacity 0.5s ease, visibility 0.5s ease;
+        }
+
+        .loading-screen.hidden {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .loading-logo {
+            font-size: 3.5rem;
+            font-weight: 800;
+            color: var(--text-light);
+            margin-bottom: 2rem;
+            animation: logoGlow 2s ease-in-out infinite alternate;
+            text-shadow: 0 0 30px rgba(255, 255, 255, 0.5);
+            text-align: center;
+        }
+
+        @keyframes logoGlow {
+            from {
+                transform: scale(1);
+            }
+            to {
+                transform: scale(1.05);
+                text-shadow: 0 0 40px rgba(255, 255, 255, 0.8);
+            }
+        }
+
+        .loading-spinner {
+            width: 80px;
+            height: 80px;
+            border: 4px solid rgba(255, 255, 255, 0.3);
+            border-top: 4px solid white;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        .loading-text {
+            margin-top: 2rem;
+            color: var(--text-light);
+            font-size: 1.3rem;
+            animation: loadingPulse 1.5s ease-in-out infinite;
+            text-align: center;
+            padding: 0 20px;
+        }
+
+        @keyframes loadingPulse {
+            0%, 100% {
+                opacity: 0.7;
+            }
+            50% {
+                opacity: 1;
+            }
+        }
+
+        body {
+            scroll-behavior: smooth;
+            background: var(--light-bg);
+        }
+
+        .main-content {
+            opacity: 0;
+            transition: opacity 0.5s ease;
+            width: 100%;
+            overflow-x: hidden;
+        }
+
+        .main-content.loaded {
+            opacity: 1;
+        }
+
+        .hero-section {
+            min-height: 100vh;
+            background: var(--gradient-main);
+            position: relative;
+            display: flex;
+            align-items: center;
+            overflow: hidden;
+            width: 100%;
+        }
+
+        .hero-particles {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        .particle {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.6);
+            border-radius: 50%;
+            animation: particleFloat 8s infinite ease-in-out;
+        }
+
+        .particle:nth-child(1) {
+            width: 6px;
+            height: 6px;
+            top: 20%;
+            left: 10%;
+            animation-delay: 0s;
+        }
+
+        .particle:nth-child(2) {
+            width: 8px;
+            height: 8px;
+            top: 60%;
+            right: 15%;
+            animation-delay: 2s;
+        }
+
+        .particle:nth-child(3) {
+            width: 4px;
+            height: 4px;
+            bottom: 30%;
+            left: 20%;
+            animation-delay: 4s;
+        }
+
+        .particle:nth-child(4) {
+            width: 7px;
+            height: 7px;
+            top: 40%;
+            right: 30%;
+            animation-delay: 1s;
+        }
+
+        .particle:nth-child(5) {
+            width: 5px;
+            height: 5px;
+            bottom: 50%;
+            left: 40%;
+            animation-delay: 3s;
+        }
+
+        @keyframes particleFloat {
+            0%, 100% {
+                transform: translateY(0px) translateX(0px);
+                opacity: 0.6;
+            }
+            25% {
+                transform: translateY(-30px) translateX(20px) rotate(90deg);
+                opacity: 1;
+            }
+            50% {
+                transform: translateY(-60px) translateX(-10px) rotate(180deg);
+                opacity: 0.8;
+            }
+            75% {
+                transform: translateY(-30px) translateX(-20px) rotate(270deg);
+                opacity: 1;
+            }
+        }
+
+        .phone-container {
+            position: relative;
+            max-width: 100%;
+        }
+
+        .phone-mockup {
+            max-width: 320px;
+            width: 100%;
+            height: auto;
+            filter: drop-shadow(0 30px 60px rgba(255, 107, 157, 0.6));
+            animation: phoneFloat 4s ease-in-out infinite;
+            border-radius: 25px;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+        }
+
+        @keyframes phoneFloat {
+            0%, 100% {
+                transform: translateY(0px) rotate(0deg);
+            }
+            50% {
+                transform: translateY(-20px) rotate(2deg);
+            }
+        }
+
+        .phone-glow {
+            position: absolute;
+            top: -30px;
+            left: -30px;
+            right: -30px;
+            bottom: -30px;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.4) 0%, transparent 70%);
+            border-radius: 50px;
+            animation: phoneGlow 3s ease-in-out infinite alternate;
+            z-index: -1;
+        }
+
+        @keyframes phoneGlow {
+            from {
+                transform: scale(1);
+                opacity: 0.4;
+            }
+            to {
+                transform: scale(1.1);
+                opacity: 0.7;
+            }
+        }
+
+        .navbar-custom {
+            background: rgba(255, 255, 255, 0.15) !important;
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            box-shadow: 0 8px 32px rgba(31, 38, 135, 0.15);
+            transition: all 0.4s ease;
+        }
+
+        .navbar-custom.scrolled {
+            background: rgba(255, 255, 255, 0.25) !important;
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
+            box-shadow: 0 12px 40px rgba(31, 38, 135, 0.25);
+        }
+
+        .navbar-brand {
+            font-weight: 800;
+            font-size: 1.8rem;
+            background: var(--gradient-main);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            white-space: nowrap;
+        }
+
+        .navbar-toggler {
+            border: none;
+            padding: 4px 8px;
+        }
+
+        .navbar-toggler:focus {
+            box-shadow: none;
+        }
+
+        .nav-link {
+            color: var(--text-dark) !important;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            position: relative;
+            white-space: nowrap;
+        }
+
+        .nav-link:hover {
+            color: var(--primary-pink) !important;
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 50%;
+            width: 0;
+            height: 3px;
+            background: var(--gradient-main);
+            transition: all 0.3s ease;
+            transform: translateX(-50%);
+            border-radius: 2px;
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        .btn-download-primary {
+            background: var(--gradient-fresh);
+            border: none;
+            border-radius: 50px;
+            padding: 18px 40px;
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--text-light);
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            transition: all 0.4s ease;
+            box-shadow: var(--shadow-soft);
+            position: relative;
+            overflow: hidden;
+            white-space: nowrap;
+        }
+
+        .btn-download-primary::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transition: left 0.6s ease;
+        }
+
+        .btn-download-primary:hover::before {
+            left: 100%;
+        }
+
+        .btn-download-primary:hover {
+            transform: translateY(-5px) scale(1.02);
+            box-shadow: var(--shadow-hover);
+            color: var(--text-light);
+        }
+
+        .btn-secondary-custom {
+            background: transparent;
+            border: 3px solid white;
+            border-radius: 50px;
+            padding: 15px 35px;
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: white;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+            white-space: nowrap;
+        }
+
+        .btn-secondary-custom:hover {
+            background: white;
+            color: var(--primary-pink);
+            transform: translateY(-3px);
+        }
+
+        .container {
+            max-width: 100%;
+            padding-left: 15px;
+            padding-right: 15px;
+        }
+
+        .features-section {
+            background: var(--warm-bg);
+            padding: 120px 0;
+            position: relative;
+            width: 100%;
+        }
+
+        .section-title {
+            font-size: 3.8rem;
+            font-weight: 800;
+            background: var(--gradient-main);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 3rem;
+            text-align: center;
+        }
+
+        .feature-card {
+            background: var(--gradient-card);
+            border-radius: 30px;
+            padding: 3.5rem 2.5rem;
+            box-shadow: var(--shadow-soft);
+            transition: all 0.5s ease;
+            height: 100%;
+            border: 2px solid transparent;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: var(--gradient-warm);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            z-index: -1;
+            border-radius: 30px;
+        }
+
+        .feature-card:hover::before {
+            opacity: 0.1;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-20px) scale(1.02);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .feature-icon {
+            width: 100px;
+            height: 100px;
+            background: var(--gradient-main);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 2.5rem;
+            font-size: 2.5rem;
+            color: var(--text-light);
+            animation: iconPulse 3s infinite;
+            box-shadow: 0 15px 40px rgba(255, 107, 157, 0.4);
+        }
+
+        @keyframes iconPulse {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.15);
+            }
+        }
+
+        .feature-card h4 {
+            color: var(--text-dark);
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            font-size: 1.5rem;
+        }
+
+        .feature-card p {
+            color: var(--text-medium);
+            font-size: 1.1rem;
+            line-height: 1.7;
+        }
+
+        .screenshots-section {
+            background: var(--card-bg);
+            padding: 120px 0;
+            width: 100%;
+        }
+
+        .screenshot-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 40px;
+            margin-top: 60px;
+        }
+
+        .screenshot-item {
+            position: relative;
+            border-radius: 25px;
+            overflow: hidden;
+            cursor: pointer;
+            transition: all 0.5s ease;
+            background: var(--card-bg);
+            padding: 20px;
+            box-shadow: var(--shadow-soft);
+            max-width: 100%;
+        }
+
+        .screenshot-item::before {
+            content: '';
+            position: absolute;
+            top: -3px;
+            left: -3px;
+            right: -3px;
+            bottom: -3px;
+            background: var(--gradient-main);
+            border-radius: 28px;
+            z-index: -1;
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+
+        .screenshot-item:hover::before {
+            opacity: 1;
+        }
+
+        .screenshot-item:hover {
+            transform: scale(1.05) translateY(-15px);
+        }
+
+        .screenshot-image {
+            width: 100%;
+            height: 450px;
+            object-fit: cover;
+            border-radius: 20px;
+            transition: all 0.4s ease;
+        }
+
+        .screenshot-overlay {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            right: 20px;
+            bottom: 20px;
+            background: var(--gradient-main);
+            border-radius: 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            transition: all 0.4s ease;
+        }
+
+        .screenshot-item:hover .screenshot-overlay {
+            opacity: 0.95;
+        }
+
+        .screenshot-title {
+            color: var(--text-light);
+            font-size: 1.4rem;
+            font-weight: 700;
+            margin-bottom: 15px;
+        }
+
+        .screenshot-desc {
+            color: var(--text-light);
+            text-align: center;
+            font-size: 1rem;
+        }
+
+        .modal-gallery {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 10000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-gallery.active {
+            display: flex;
+        }
+
+        .modal-content {
+            max-width: 90%;
+            max-height: 90%;
+            border-radius: 20px;
+            position: relative;
+        }
+
+        .modal-image {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            border-radius: 20px;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: -50px;
+            right: 0;
+            color: var(--text-light);
+            font-size: 2.5rem;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+
+        .modal-close:hover {
+            color: var(--accent-orange);
+        }
+
+        .stats-section {
+            background: var(--gradient-warm);
+            padding: 100px 0;
+            width: 100%;
+        }
+
+        .stat-item {
+            text-align: center;
+            color: var(--text-light);
+        }
+
+        .stat-number {
+            font-size: 4rem;
+            font-weight: 800;
+            display: block;
+            text-shadow: 0 0 30px rgba(255, 255, 255, 0.5);
+        }
+
+        .stat-text {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-top: 15px;
+        }
+
+        .benefits-section {
+            background: var(--light-bg);
+            padding: 120px 0;
+            width: 100%;
+        }
+
+        .benefit-item {
+            background: var(--gradient-card);
+            border-radius: 25px;
+            padding: 2.5rem;
+            margin-bottom: 2rem;
+            box-shadow: var(--shadow-soft);
+            transition: all 0.4s ease;
+            border-right: 6px solid var(--primary-pink);
+        }
+
+        .benefit-item:hover {
+            transform: translateX(20px) scale(1.02);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .contact-section {
+            background: var(--warm-bg);
+            padding: 120px 0;
+            width: 100%;
+        }
+
+        .contact-card {
+            background: var(--gradient-card);
+            border-radius: 30px;
+            padding: 3rem 2.5rem;
+            text-align: center;
+            transition: all 0.5s ease;
+            box-shadow: var(--shadow-soft);
+            border: 3px solid transparent;
+            height: 100%;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .contact-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: var(--gradient-main);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            z-index: -1;
+            border-radius: 30px;
+        }
+
+        .contact-card:hover::before {
+            opacity: 0.05;
+        }
+
+        .contact-card:hover {
+            transform: translateY(-15px) scale(1.03);
+            box-shadow: var(--shadow-hover);
+            border-color: var(--primary-pink);
+        }
+
+        .contact-icon {
+            width: 80px;
+            height: 80px;
+            background: var(--gradient-main);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+            font-size: 2rem;
+            color: var(--text-light);
+            box-shadow: 0 10px 30px rgba(255, 107, 157, 0.4);
+        }
+
+        .team-section {
+            background: var(--card-bg);
+            padding: 120px 0;
+            width: 100%;
+        }
+
+        .team-member {
+            background: var(--gradient-card);
+            border-radius: 30px;
+            padding: 3rem 2.5rem;
+            text-align: center;
+            transition: all 0.5s ease;
+            box-shadow: var(--shadow-soft);
+            height: 100%;
+        }
+
+        .team-member:hover {
+            transform: translateY(-20px) scale(1.02);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .team-avatar {
+            width: 130px;
+            height: 130px;
+            border-radius: 50%;
+            background: var(--gradient-main);
+            margin: 0 auto 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3.5rem;
+            color: var(--text-light);
+            background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="35" r="15" fill="white" opacity="0.8"/><path d="M25 75 Q25 60 50 60 Q75 60 75 75 Z" fill="white" opacity="0.8"/></svg>');
+            background-size: 60%;
+            background-repeat: no-repeat;
+            background-position: center;
+            box-shadow: 0 15px 40px rgba(255, 107, 157, 0.4);
+        }
+
+        .footer {
+            background: var(--text-dark);
+            color: var(--text-light);
+            padding: 80px 0 40px;
+            width: 100%;
+        }
+
+        .footer h5, .footer h6 {
+            background: var(--gradient-main);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-weight: 700;
+        }
+
+        .footer .text-muted {
+            color: #ddd !important;
+        }
+
+        .footer a {
+            color: #ddd !important;
+            transition: all 0.3s ease;
+            text-decoration: none;
+        }
+
+        .footer a:hover {
+            color: var(--primary-pink) !important;
+        }
+
+        .icon-svg {
+            width: 1.5rem;
+            height: 1.5rem;
+            fill: currentColor;
+        }
+
+        .text-gradient {
+            background: var(--gradient-main);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .scroll-indicator {
+            position: absolute;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: var(--text-light);
+            animation: bounce 2s infinite;
+            cursor: pointer;
+            font-size: 2rem;
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {
+                transform: translateX(-50%) translateY(0);
+            }
+            40% {
+                transform: translateX(-50%) translateY(-15px);
+            }
+            60% {
+                transform: translateX(-50%) translateY(-8px);
+            }
+        }
+
+        .fade-in-up {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: all 0.7s ease;
+        }
+
+        .fade-in-up.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .whatsapp-btn {
+            background: linear-gradient(135deg, #25D366 0%, #128C7E 100%);
+            border: none;
+            border-radius: 50px;
+            padding: 15px 30px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: white;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 25px rgba(37, 211, 102, 0.3);
+            white-space: nowrap;
+        }
+
+        .whatsapp-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 35px rgba(37, 211, 102, 0.4);
+            color: white;
+        }
+
+        .instagram-btn {
+            background: linear-gradient(135deg, #E4405F 0%, #C13584 50%, #833AB4 100%);
+            border: none;
+            border-radius: 50px;
+            padding: 15px 30px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: white;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 25px rgba(228, 64, 95, 0.3);
+            white-space: nowrap;
+        }
+
+        .instagram-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 35px rgba(228, 64, 95, 0.4);
+            color: white;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding-left: 10px;
+                padding-right: 10px;
+            }
+
+            .loading-logo {
+                font-size: 2.5rem;
+                padding: 0 20px;
+            }
+
+            .loading-text {
+                font-size: 1.1rem;
+                padding: 0 30px;
+            }
+
+            .section-title {
+                font-size: 2.8rem;
+                padding: 0 15px;
+            }
+
+            .hero-section h1 {
+                font-size: 2.5rem !important;
+                padding: 0 15px;
+            }
+
+            .hero-section .lead {
+                font-size: 1.1rem !important;
+                padding: 0 15px;
+            }
+
+            .phone-mockup {
+                max-width: 250px;
+            }
+
+            .feature-card, .contact-card, .team-member {
+                padding: 2rem 1.5rem;
+                margin: 0 10px;
+            }
+
+            .screenshot-grid {
+                grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+                gap: 30px;
+                padding: 0 15px;
+            }
+
+            .screenshot-image {
+                height: 350px;
+            }
+
+            .btn-secondary-custom, .btn-download-primary {
+                font-size: 1rem;
+                padding: 12px 25px;
+                margin: 5px;
+            }
+
+            .navbar-brand {
+                font-size: 1.5rem;
+            }
+
+            .d-flex.flex-wrap.gap-3 {
+                flex-direction: column;
+                align-items: center;
+                gap: 15px !important;
+            }
+
+            .d-flex.flex-wrap.gap-3 a {
+                width: 90%;
+                justify-content: center;
+                text-align: center;
+            }
+
+            .row.g-4 {
+                margin: 0;
+                padding: 0 10px;
+            }
+
+            .col-lg-4, .col-lg-6, .col-lg-3 {
+                padding: 0 10px;
+                margin-bottom: 20px;
+            }
+
+            .benefit-item {
+                margin: 0 10px 2rem 10px;
+                padding: 2rem 1.5rem;
+            }
+
+            .stat-number {
+                font-size: 3rem;
+            }
+
+            .stat-text {
+                font-size: 1.1rem;
+            }
+
+            .navbar-collapse {
+                background: rgba(255, 255, 255, 0.98);
+                border-radius: 15px;
+                margin-top: 10px;
+                padding: 15px;
+                box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            }
+
+            .footer {
+                padding: 60px 0 30px;
+            }
+
+            .footer .col-lg-6 {
+                margin-bottom: 30px;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .hero-section {
+                padding: 100px 0 50px;
+            }
+
+            .hero-section h1 {
+                font-size: 2rem !important;
+            }
+
+            .section-title {
+                font-size: 2.2rem;
+            }
+
+            .loading-logo {
+                font-size: 2rem;
+            }
+
+            .phone-mockup {
+                max-width: 200px;
+            }
+
+            .feature-icon {
+                width: 80px;
+                height: 80px;
+                font-size: 2rem;
+            }
+
+            .screenshot-item {
+                padding: 15px;
+            }
+
+            .screenshot-image {
+                height: 300px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+<div class="loading-screen" id="loadingScreen">
+    <div class="loading-logo fancy-font">ویجت پلاس</div>
+    <div class="loading-spinner"></div>
+    <div class="loading-text">در حال بارگذاری تجربه جادویی...</div>
+</div>
+
+<div class="main-content" id="mainContent">
+    <nav class="navbar navbar-expand-lg navbar-custom fixed-top">
+        <div class="container">
+            <a class="navbar-brand fancy-font" href="#home">
+                <img src="logo.png" alt="ویجت پلاس" style="width: 40px; height: 40px; margin-left: 10px;">
+                ویجت پلاس
+            </a>
+            <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <svg class="icon-svg" viewBox="0 0 24 24" fill="#2D3436">
+                    <path d="M3,6H21V8H3V6M3,11H21V13H3V11M3,16H21V18H3V16Z"/>
+                </svg>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#home">خانه</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#features">ویژگی‌ها</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#screenshots">تصاویر</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#benefits">مزایا</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#team">تیم</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#contact">ارتباط</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <section id="home" class="hero-section">
+        <div class="hero-particles">
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+        </div>
+
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-6" data-aos="fade-right">
+                    <h1 class="display-3 fw-bold text-white mb-4 fancy-font">
+                        ویجت پلاس
+                        <br>
+                        <span style="color: #FFD835; text-shadow: 2px 2px 4px rgba(0,0,0,0.3);">جادوی انیمیشن</span>
+                    </h1>
+                    <p class="lead text-white mb-4 fs-4">
+                        گوشی‌تان را به یک تجربه رنگارنگ و پر انرژی تبدیل کنید! ✨🎨
+                    </p>
+                    <div class="d-flex flex-wrap gap-3 mb-4">
+                        <a href="https://cafebazaar.ir/app/com.patoghjobs.widgetplus" class="btn-secondary-custom"
+                           target="_blank">
+                            <img src="cafebazar-icon.png" alt="کافه بازار"
+                                 style="width: 24px; height: 24px; margin-left: 8px;">
+                            دانلود از کافه بازار
+                        </a>
+                        <a href="#" class="btn-secondary-custom" onclick="downloadDirect()">
+                            <svg class="icon-svg" viewBox="0 0 24 24">
+                                <path d="M14,2H6A2,2 0 0,0 4,4V20A2,2 0 0,0 6,22H18A2,2 0 0,0 20,20V8L14,2M18,20H6V4H13V9H18V20Z"/>
+                            </svg>
+                            دانلود مستقیم APK
+                        </a>
+                    </div>
+                    <p class="text-white-50 fs-6">
+                        💯 کاملاً رایگان • 🔒 امن و قابل اعتماد • ⚡ سریع و کم حجم
+                    </p>
+                </div>
+                <div class="col-lg-6 text-center" data-aos="fade-left">
+                    <div class="phone-container">
+                        <div class="phone-glow"></div>
+                        <img src="phone-mockup.png" alt="ویجت پلاس اپلیکیشن" class="phone-mockup img-fluid">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="scroll-indicator" onclick="scrollToSection('#stats')">
+            <svg class="icon-svg" viewBox="0 0 24 24">
+                <path d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"/>
+            </svg>
+        </div>
+    </section>
+
+    <section id="stats" class="stats-section">
+        <div class="container">
+            <div class="row text-center">
+                <div class="col-md-3 col-6 mb-4" data-aos="zoom-in" data-aos-delay="100">
+                    <div class="stat-item">
+                        <span class="stat-number fancy-font">50+</span>
+                        <div class="stat-text">انیمیشن جذاب</div>
+                    </div>
+                </div>
+                <div class="col-md-3 col-6 mb-4" data-aos="zoom-in" data-aos-delay="200">
+                    <div class="stat-item">
+                        <span class="stat-number fancy-font">100%</span>
+                        <div class="stat-text">امنیت کامل</div>
+                    </div>
+                </div>
+                <div class="col-md-3 col-6 mb-4" data-aos="zoom-in" data-aos-delay="300">
+                    <div class="stat-item">
+                        <span class="stat-number fancy-font">0</span>
+                        <div class="stat-text">تبلیغات مزاحم</div>
+                    </div>
+                </div>
+                <div class="col-md-3 col-6 mb-4" data-aos="zoom-in" data-aos-delay="400">
+                    <div class="stat-item">
+                        <span class="stat-number fancy-font">کم</span>
+                        <div class="stat-text">مصرف باتری</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="features" class="features-section">
+        <div class="container">
+            <div class="text-center mb-5">
+                <h2 class="section-title fancy-font" data-aos="fade-up">قابلیت‌های فوق‌العاده</h2>
+                <p class="lead text-dark fs-5" data-aos="fade-up" data-aos-delay="100">
+                    تکنولوژی پیشرفته برای تجربه‌ای بی‌نظیر 🚀
+                </p>
+            </div>
+
+            <div class="row g-4">
+                <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="100">
+                    <div class="feature-card text-center">
+                        <div class="feature-icon">
+                            <svg class="icon-svg" viewBox="0 0 24 24">
+                                <path d="M12,2A10,10 0 0,1 22,12A10,10 0 0,1 12,22A10,10 0 0,1 2,12A10,10 0 0,1 12,2M11,7V13L16.25,16.15L17,14.92L12.5,12.25V7H11Z"/>
+                            </svg>
+                        </div>
+                        <h4 class="fw-bold mb-3">انیمیشن هوشمند</h4>
+                        <p>هر اپلیکیشن انیمیشن مخصوص خودش را دارد که به طور خودکار شناسایی و اجرا می‌شود</p>
+                    </div>
+                </div>
+
+                <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="200">
+                    <div class="feature-card text-center">
+                        <div class="feature-icon">
+                            <svg class="icon-svg" viewBox="0 0 24 24">
+                                <path d="M12,15.5A3.5,3.5 0 0,1 8.5,12A3.5,3.5 0 0,1 12,8.5A3.5,3.5 0 0,1 15.5,12A3.5,3.5 0 0,1 12,15.5M19.43,12.97C19.47,12.65 19.5,12.33 19.5,12C19.5,11.67 19.47,11.34 19.43,11L21.54,9.37C21.73,9.22 21.78,8.95 21.66,8.73L19.66,5.27C19.54,5.05 19.27,4.96 19.05,5.05L16.56,6.05C16.04,5.66 15.5,5.32 14.87,5.07L14.5,2.42C14.46,2.18 14.25,2 14,2H10C9.75,2 9.54,2.18 9.5,2.42L9.13,5.07C8.5,5.32 7.96,5.66 7.44,6.05L4.95,5.05C4.73,4.96 4.46,5.05 4.34,5.27L2.34,8.73C2.22,8.95 2.27,9.22 2.46,9.37L4.57,11C4.53,11.34 4.5,11.67 4.5,12C4.5,12.33 4.53,12.65 4.57,12.97L2.46,14.63C2.27,14.78 2.22,15.05 2.34,15.27L4.34,18.73C4.46,18.95 4.73,19.03 4.95,18.95L7.44,17.94C7.96,18.34 8.5,18.68 9.13,18.93L9.5,21.58C9.54,21.82 9.75,22 10,22H14C14.25,22 14.46,21.82 14.5,21.58L14.87,18.93C15.5,18.68 16.04,18.34 16.56,17.94L19.05,18.95C19.27,19.03 19.54,18.95 19.66,18.73L21.66,15.27C21.78,15.05 21.73,14.78 21.54,14.63L19.43,12.97Z"/>
+                            </svg>
+                        </div>
+                        <h4 class="fw-bold mb-3">کنترل کامل</h4>
+                        <p>موقعیت، اندازه، سرعت و حتی شفافیت انیمیشن‌ها کاملاً قابل تنظیم و شخصی‌سازی</p>
+                    </div>
+                </div>
+
+                <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="300">
+                    <div class="feature-card text-center">
+                        <div class="feature-icon">
+                            <svg class="icon-svg" viewBox="0 0 24 24">
+                                <path d="M12,9A3,3 0 0,0 9,12A3,3 0 0,0 12,15A3,3 0 0,0 15,12A3,3 0 0,0 12,9M12,17A5,5 0 0,1 7,12A5,5 0 0,1 12,7A5,5 0 0,1 17,12A5,5 0 0,1 12,17M12,4.5C7,4.5 2.73,7.61 1,12C2.73,16.39 7,19.5 12,19.5C17,19.5 21.27,16.39 23,12C21.27,7.61 17,4.5 12,4.5Z"/>
+                            </svg>
+                        </div>
+                        <h4 class="fw-bold mb-3">پیش‌نمایش زنده</h4>
+                        <p>قبل از اعمال تغییرات، انیمیشن را به صورت زنده و در همان لحظه مشاهده کنید</p>
+                    </div>
+                </div>
+
+                <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="400">
+                    <div class="feature-card text-center">
+                        <div class="feature-icon">
+                            <svg class="icon-svg" viewBox="0 0 24 24">
+                                <path d="M13,9H11V7H13M13,17H11V11H13M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2Z"/>
+                            </svg>
+                        </div>
+                        <h4 class="fw-bold mb-3">جابجایی ساده</h4>
+                        <p>با لمس و کشیدن انیمیشن‌ها را به راحتی جابجا کنید و موقعیت آن‌ها را تغییر دهید</p>
+                    </div>
+                </div>
+
+                <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="500">
+                    <div class="feature-card text-center">
+                        <div class="feature-icon">
+                            <svg class="icon-svg" viewBox="0 0 24 24">
+                                <path d="M16.67,4H15V2H9V4H7.33A1.33,1.33 0 0,0 6,5.33V20.67C6,21.4 6.6,22 7.33,22H16.67A1.33,1.33 0 0,0 18,20.67V5.33C18,4.6 17.4,4 16.67,4M13,18V16H11V14H13V12H15V14H13V16H15V18H13M13,10V8H11V10H13Z"/>
+                            </svg>
+                        </div>
+                        <h4 class="fw-bold mb-3">بهینه‌سازی باتری</h4>
+                        <p>طراحی شده با تکنولوژی پیشرفته برای حداقل مصرف انرژی و حداکثر کارایی</p>
+                    </div>
+                </div>
+
+                <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="600">
+                    <div class="feature-card text-center">
+                        <div class="feature-icon">
+                            <svg class="icon-svg" viewBox="0 0 24 24">
+                                <path d="M12,1L3,5V11C3,16.55 6.84,21.74 12,23C17.16,21.74 21,16.55 21,11V5L12,1M10,17L6,13L7.41,11.59L10,14.17L16.59,7.58L18,9L10,17Z"/>
+                            </svg>
+                        </div>
+                        <h4 class="fw-bold mb-3">امنیت مطلق</h4>
+                        <p>بدون نیاز به اینترنت و بدون دسترسی به اطلاعات شخصی شما کار می‌کند</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="screenshots" class="screenshots-section">
+        <div class="container">
+            <div class="text-center mb-5">
+                <h2 class="section-title fancy-font" data-aos="fade-up">گالری تصاویر زیبا</h2>
+                <p class="lead text-dark fs-5" data-aos="fade-up" data-aos-delay="100">
+                    نگاهی به رابط کاربری شگفت‌انگیز و قابلیت‌های جذاب 📱✨
+                </p>
+            </div>
+
+            <div class="screenshot-grid">
+                <div class="screenshot-item" data-aos="zoom-in" data-aos-delay="100"
+                     onclick="openModal('phone-mockup.png')">
+                    <img src="phone-mockup.png" alt="صفحه اصلی" class="screenshot-image">
+                    <div class="screenshot-overlay">
+                        <h6 class="screenshot-title">صفحه اصلی جذاب</h6>
+                        <p class="screenshot-desc">مدیریت آسان انیمیشن‌های فعال و کنترل هوشمند برنامه‌ها</p>
+                    </div>
+                </div>
+
+                <div class="screenshot-item" data-aos="zoom-in" data-aos-delay="200"
+                     onclick="openModal('app-screenshot-1.png')">
+                    <img src="app-screenshot-1.png" alt="تنظیمات" class="screenshot-image">
+                    <div class="screenshot-overlay">
+                        <h6 class="screenshot-title">تنظیمات پیشرفته</h6>
+                        <p class="screenshot-desc">شخصی‌سازی کامل انیمیشن‌ها، کنترل جهت و سرعت حرکت</p>
+                    </div>
+                </div>
+
+                <div class="screenshot-item" data-aos="zoom-in" data-aos-delay="300"
+                     onclick="openModal('screenshot-3.png')">
+                    <img src="screenshot-3.png" alt="گالری انیمیشن" class="screenshot-image">
+                    <div class="screenshot-overlay">
+                        <h6 class="screenshot-title">گالری انیمیشن</h6>
+                        <p class="screenshot-desc">بیش از 50 انیمیشن متنوع، رنگارنگ و فوق‌العاده جذاب</p>
+                    </div>
+                </div>
+
+                <div class="screenshot-item" data-aos="zoom-in" data-aos-delay="400"
+                     onclick="openModal('screenshot-4.png')">
+                    <img src="screenshot-4.png" alt="پیش‌نمایش" class="screenshot-image">
+                    <div class="screenshot-overlay">
+                        <h6 class="screenshot-title">پیش‌نمایش زنده</h6>
+                        <p class="screenshot-desc">مشاهده فوری تغییرات و تست انیمیشن‌ها قبل از اعمال</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="modal-gallery" id="modalGallery" onclick="closeModal()">
+        <div class="modal-content">
+            <span class="modal-close" onclick="closeModal()">&times;</span>
+            <img id="modalImage" class="modal-image" src="" alt="">
+        </div>
+    </div>
+
+    <section id="benefits" class="benefits-section">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-6" data-aos="fade-right">
+                    <h2 class="display-4 fw-bold text-dark mb-4 fancy-font text-gradient">
+                        فواید شگفت‌انگیز 🧠✨
+                    </h2>
+                    <p class="lead text-dark mb-4 fs-5">
+                        علم ثابت کرده وقتی مغز ما تنوع بصری می‌بیند، انرژی مثبت و شادی بیشتری تولید می‌کند!
+                    </p>
+
+                    <div class="benefit-item">
+                        <h5 class="fw-bold text-dark mb-2">
+                            <svg class="icon-svg text-success me-2" viewBox="0 0 24 24">
+                                <path d="M12,17.5C14.33,17.5 16.3,16.04 17.11,14H6.89C7.69,16.04 9.67,17.5 12,17.5M8.5,11A1.5,1.5 0 0,0 10,9.5A1.5,1.5 0 0,0 8.5,8A1.5,1.5 0 0,0 7,9.5A1.5,1.5 0 0,0 8.5,11M15.5,11A1.5,1.5 0 0,0 17,9.5A1.5,1.5 0 0,0 15.5,8A1.5,1.5 0 0,0 14,9.5A1.5,1.5 0 0,0 15.5,11M12,20A8,8 0 0,1 4,12A8,8 0 0,1 12,4A8,8 0 0,1 20,12A8,8 0 0,1 12,20M12,2C6.47,2 2,6.5 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2Z"/>
+                            </svg>
+                            آرامش چشم و کاهش خستگی روانی
+                        </h5>
+                        <p class="mb-0 text-dark">تنوع بصری باعث کاهش فشار چشم و خستگی ذهنی ناشی از یکنواختی می‌شود</p>
+                    </div>
+
+                    <div class="benefit-item">
+                        <h5 class="fw-bold text-dark mb-2">
+                            <svg class="icon-svg text-warning me-2" viewBox="0 0 24 24">
+                                <path d="M12,2L13.09,8.26L20,9L13.09,9.74L12,16L10.91,9.74L4,9L10.91,8.26L12,2Z"/>
+                            </svg>
+                            احساس شادی و انرژی مثبت
+                        </h5>
+                        <p class="mb-0 text-dark">انیمیشن‌های رنگارنگ باعث ترشح هورمون‌های شادی و احساس بهتر می‌شوند</p>
+                    </div>
+
+                    <div class="benefit-item">
+                        <h5 class="fw-bold text-dark mb-2">
+                            <svg class="icon-svg text-info me-2" viewBox="0 0 24 24">
+                                <path d="M9.5,3A6.5,6.5 0 0,1 16,9.5C16,11.11 15.41,12.59 14.44,13.73L14.71,14H15.5L20.5,19L19,20.5L14,15.5V14.71L13.73,14.44C12.59,15.41 11.11,16 9.5,16A6.5,6.5 0 0,1 3,9.5A6.5,6.5 0 0,1 9.5,3M9.5,5C7,5 5,7 5,9.5C5,12 7,14 9.5,14C12,14 14,12 14,9.5C14,7 12,5 9.5,5Z"/>
+                            </svg>
+                            کسر یکنواختی و افزایش تمرکز
+                        </h5>
+                        <p class="mb-0 text-dark">تجربه استفاده از گوشی به یک فعالیت لذت‌بخش و الهام‌بخش تبدیل
+                            می‌شود</p>
+                    </div>
+                </div>
+
+                <div class="col-lg-6 text-center" data-aos="fade-left">
+                    <div class="phone-container">
+                        <div class="phone-glow"></div>
+                        <img src="app-screenshot-1.png" alt="اسکرین‌شات برنامه" class="phone-mockup img-fluid">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-5" style="background: var(--gradient-warm);">
+        <div class="container text-center">
+            <div data-aos="zoom-in">
+                <h2 class="display-4 fw-bold text-white mb-4 fancy-font">
+                    آماده تحول دیجیتال هستید؟ 🚀💫
+                </h2>
+                <p class="lead text-white mb-4 fs-5">
+                    همین الان ویجت پلاس را دانلود کنید و گوشی‌تان را به یک تجربه جادویی تبدیل کنید!
+                </p>
+                <div class="d-flex flex-wrap gap-3 justify-content-center">
+                    <a href="https://cafebazaar.ir/app/com.patoghjobs.widgetplus" class="btn-secondary-custom btn-lg"
+                       target="_blank">
+                        <img src="cafebazar-icon.png" alt="کافه بازار"
+                             style="width: 24px; height: 24px; margin-left: 8px;">
+                        دانلود از کافه بازار
+                    </a>
+                    <a href="#" class="btn-secondary-custom btn-lg" onclick="downloadDirect()">
+                        <svg class="icon-svg me-2" viewBox="0 0 24 24">
+                            <path d="M14,2H6A2,2 0 0,0 4,4V20A2,2 0 0,0 6,22H18A2,2 0 0,0 20,20V8L14,2M18,20H6V4H13V9H18V20Z"/>
+                        </svg>
+                        دانلود مستقیم APK
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="team" class="team-section">
+        <div class="container">
+            <div class="text-center mb-5">
+                <h2 class="section-title fancy-font" data-aos="fade-up">تیم خلاق و متخصص 👥💡</h2>
+                <p class="lead text-dark fs-5" data-aos="fade-up" data-aos-delay="100">
+                    افرادی که با عشق و تخصص ویجت پلاس را برای شما ساختند
+                </p>
+            </div>
+
+            <div class="row g-4">
+                <div class="col-lg-3 col-md-6" data-aos="flip-left" data-aos-delay="100">
+                    <div class="team-member">
+                        <div class="team-avatar">
+                            <img src="team-1.jpg" alt="علی محمدی"
+                                 style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;">
+                        </div>
+                        <h5 class="fw-bold mb-2 text-dark">علی محمدی</h5>
+                        <p class="text-gradient mb-2 fancy-font fw-bold">توسعه‌دهنده اندروید</p>
+                        <p class="text-dark small">متخصص برنامه‌نویسی موبایل و طراحی الگوریتم‌های هوشمند</p>
+                        <a href="/profile/hosein-rezaei" class="btn mt-3" style="
+    background: linear-gradient(135deg, #FF6B9D 0%, #C44569 100%);
+    border: none;
+    border-radius: 25px;
+    padding: 10px 25px;
+    font-size: 14px;
+    font-weight: 600;
+    color: white;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    box-shadow: 0 6px 20px rgba(255, 107, 157, 0.3);
+" onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 8px 25px rgba(255, 107, 157, 0.4)'"
+                           onmouseout="this.style.transform='translateY(0px)'; this.style.boxShadow='0 6px 20px rgba(255, 107, 157, 0.3)'">
+                            مشاهده پروفایل
+                        </a>
+                    </div>
+                </div>
+
+                <div class="col-lg-3 col-md-6" data-aos="flip-left" data-aos-delay="300">
+                    <div class="team-member">
+                        <div class="team-avatar"></div>
+                        <h5 class="fw-bold mb-2 text-dark">حسین رضایی</h5>
+                        <p class="text-gradient mb-2 fancy-font fw-bold">مهندس نرم‌افزار</p>
+                        <p class="text-dark small">متخصص بهینه‌سازی عملکرد و امنیت سیستم‌های موبایل</p>
+                    </div>
+                </div>
+
+                <div class="col-lg-3 col-md-6" data-aos="flip-left" data-aos-delay="400">
+                    <div class="team-member">
+                        <div class="team-avatar"></div>
+                        <h5 class="fw-bold mb-2 text-dark">مریم کریمی</h5>
+                        <p class="text-gradient mb-2 fancy-font fw-bold">تحلیلگر محصول</p>
+                        <p class="text-dark small">متخصص تجزیه و تحلیل نیازهای کاربران و بهبود محصول</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="contact-section">
+        <div class="container">
+            <div class="text-center mb-5">
+                <h2 class="section-title fancy-font" data-aos="fade-up">در ارتباط باشیم 💬✨</h2>
+                <p class="lead text-dark fs-5" data-aos="fade-up" data-aos-delay="100">
+                    ما را در شبکه‌های اجتماعی دنبال کنید و با ما در ارتباط باشید
+                </p>
+            </div>
+
+            <div class="row g-4 justify-content-center">
+                <div class="col-lg-6 col-md-8" data-aos="zoom-in" data-aos-delay="100">
+                    <div class="contact-card">
+                        <div class="contact-icon">
+                            <svg class="icon-svg" viewBox="0 0 24 24">
+                                <path d="M7.8,2H16.2C19.4,2 22,4.6 22,7.8V16.2A5.8,5.8 0 0,1 16.2,22H7.8C4.6,22 2,19.4 2,16.2V7.8A5.8,5.8 0 0,1 7.8,2M7.6,4A3.6,3.6 0 0,0 4,7.6V16.4C4,18.39 5.61,20 7.6,20H16.4A3.6,3.6 0 0,0 20,16.4V7.6C20,5.61 18.39,4 16.4,4H7.6M17.25,5.5A1.25,1.25 0 0,1 18.5,6.75A1.25,1.25 0 0,1 17.25,8A1.25,1.25 0 0,1 16,6.75A1.25,1.25 0 0,1 17.25,5.5M12,7A5,5 0 0,1 17,12A5,5 0 0,1 12,17A5,5 0 0,1 7,12A5,5 0 0,1 12,7M12,9A3,3 0 0,0 9,12A3,3 0 0,0 12,15A3,3 0 0,0 15,12A3,3 0 0,0 12,9Z"/>
+                            </svg>
+                        </div>
+                        <h5 class="fw-bold mb-3 text-dark">اینستاگرام ویجت پلاس</h5>
+                        <p class="text-dark mb-4">آخرین اخبار، ترفندها و بروزرسانی‌های هیجان‌انگیز برنامه را دنبال
+                            کنید</p>
+                        <div class="d-flex flex-column gap-3">
+                            <a href="https://www.instagram.com/widgetplus.ir" class="instagram-btn" target="_blank">
+                                <svg class="icon-svg me-2" viewBox="0 0 24 24">
+                                    <path d="M7.8,2H16.2C19.4,2 22,4.6 22,7.8V16.2A5.8,5.8 0 0,1 16.2,22H7.8C4.6,22 2,19.4 2,16.2V7.8A5.8,5.8 0 0,1 7.8,2M7.6,4A3.6,3.6 0 0,0 4,7.6V16.4C4,18.39 5.61,20 7.6,20H16.4A3.6,3.6 0 0,0 20,16.4V7.6C20,5.61 18.39,4 16.4,4H7.6M17.25,5.5A1.25,1.25 0 0,1 18.5,6.75A1.25,1.25 0 0,1 17.25,8A1.25,1.25 0 0,1 16,6.75A1.25,1.25 0 0,1 17.25,5.5M12,7A5,5 0 0,1 17,12A5,5 0 0,1 12,17A5,5 0 0,1 7,12A5,5 0 0,1 12,7M12,9A3,3 0 0,0 9,12A3,3 0 0,0 12,15A3,3 0 0,0 15,12A3,3 0 0,0 12,9Z"/>
+                                </svg>
+                                دنبال کردن در اینستاگرام
+                            </a>
+                            <a href="https://wa.me/989190986529" class="whatsapp-btn" target="_blank">
+                                <img src="whatsapp-icon.png" alt="واتساپ"
+                                     style="width: 24px; height: 24px; margin-left: 8px;">
+                                پیام در واتساپ
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6 mb-4">
+                    <h5 class="fw-bold mb-3 fancy-font">
+                        <svg class="icon-svg me-2" viewBox="0 0 24 24">
+                            <path d="M17,19H7V5H17M17,1H7C5.89,1 5,1.89 5,3V21C5,22.11 5.89,23 7,23H17C18.11,23 19,22.11 19,21V3C19,1.89 18.11,1 17,1Z"/>
+                        </svg>
+                        ویجت پلاس
+                    </h5>
+                    <p class="text-muted">
+                        برنامه انیمیشن تعاملی که یکنواختی گوشی شما را از بین می‌برد و تجربه استفاده را بهبود می‌دهد.
+                        زندگی رنگارنگ‌تر با گوشی شما!
+                    </p>
+                </div>
+                <div class="col-lg-6 mb-4">
+                    <h6 class="fw-bold mb-3">دانلود برنامه</h6>
+                    <a href="https://cafebazaar.ir/app/com.patoghjobs.widgetplus"
+                       class="btn btn-outline-light rounded-pill mb-2 d-block" target="_blank">
+                        <img src="cafebazar-icon.png" alt="کافه بازار"
+                             style="width: 24px; height: 24px; margin-left: 8px;">
+                        دانلود از کافه بازار
+                    </a>
+                    <a href="#" class="btn btn-outline-success rounded-pill d-block" onclick="downloadDirect()">
+                        <svg class="icon-svg me-2" viewBox="0 0 24 24">
+                            <path d="M14,2H6A2,2 0 0,0 4,4V20A2,2 0 0,0 6,22H18A2,2 0 0,0 20,20V8L14,2M18,20H6V4H13V9H18V20Z"/>
+                        </svg>
+                        دانلود مستقیم APK
+                    </a>
+                </div>
+            </div>
+
+            <hr class="my-4 border-secondary">
+
+            <div class="row align-items-center">
+                <div class="col-md-6">
+                    <p class="text-muted mb-0">
+                        © 2024 ویجت پلاس. تمام حقوق محفوظ است.
+                    </p>
+                </div>
+                <div class="col-md-6 text-md-end">
+                    <a href="https://www.instagram.com/widgetplus.ir" class="text-muted me-3" target="_blank">
+                        <svg class="icon-svg" viewBox="0 0 24 24">
+                            <path d="M7.8,2H16.2C19.4,2 22,4.6 22,7.8V16.2A5.8,5.8 0 0,1 16.2,22H7.8C4.6,22 2,19.4 2,16.2V7.8A5.8,5.8 0 0,1 7.8,2M7.6,4A3.6,3.6 0 0,0 4,7.6V16.4C4,18.39 5.61,20 7.6,20H16.4A3.6,3.6 0 0,0 20,16.4V7.6C20,5.61 18.39,4 16.4,4H7.6M17.25,5.5A1.25,1.25 0 0,1 18.5,6.75A1.25,1.25 0 0,1 17.25,8A1.25,1.25 0 0,1 16,6.75A1.25,1.25 0 0,1 17.25,5.5M12,7A5,5 0 0,1 17,12A5,5 0 0,1 12,17A5,5 0 0,1 7,12A5,5 0 0,1 12,7M12,9A3,3 0 0,0 9,12A3,3 0 0,0 12,15A3,3 0 0,0 15,12A3,3 0 0,0 12,9Z"/>
+                        </svg>
+                    </a>
+                    <a href="https://wa.me/989190986529" class="text-muted" target="_blank">
+                        <img src="whatsapp-icon.png" alt="واتساپ" style="width: 24px; height: 24px; margin-left: 8px;">
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+
+<script>
+    window.addEventListener('load', function () {
+        setTimeout(function () {
+            document.getElementById('loadingScreen').classList.add('hidden');
+            document.getElementById('mainContent').classList.add('loaded');
+
+            AOS.init({
+                duration: 1200,
+                once: true,
+                offset: 100,
+                easing: 'ease-out-cubic'
+            });
+        }, 2500);
+    });
+
+    function downloadDirect() {
+        alert('لینک دانلود مستقیم به زودی اضافه خواهد شد. در حال حاضر از کافه بازار دانلود کنید.');
+    }
+
+    function openModal(imageSrc) {
+        document.getElementById('modalImage').src = imageSrc;
+        document.getElementById('modalGallery').classList.add('active');
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closeModal() {
+        document.getElementById('modalGallery').classList.remove('active');
+        document.body.style.overflow = 'auto';
+    }
+
+    function scrollToSection(selector) {
+        document.querySelector(selector).scrollIntoView({
+            behavior: 'smooth'
+        });
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            e.preventDefault();
+            const target = document.querySelector(this.getAttribute('href'));
+            if (target) {
+                target.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+            }
+        });
+    });
+
+    const navbar = document.querySelector('.navbar');
+    window.addEventListener('scroll', () => {
+        if (window.scrollY > 100) {
+            navbar.classList.add('scrolled');
+        } else {
+            navbar.classList.remove('scrolled');
+        }
+    });
+
+    const observerOptions = {
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px'
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('visible');
+            }
+        });
+    }, observerOptions);
+
+    document.querySelectorAll('.fade-in-up').forEach(el => {
+        observer.observe(el);
+    });
+
+    document.addEventListener('DOMContentLoaded', function () {
+        const heroParticles = document.querySelector('.hero-particles');
+        for (let i = 0; i < 15; i++) {
+            const particle = document.createElement('div');
+            particle.className = 'particle';
+            particle.style.width = Math.random() * 6 + 3 + 'px';
+            particle.style.height = particle.style.width;
+            particle.style.top = Math.random() * 100 + '%';
+            particle.style.left = Math.random() * 100 + '%';
+            particle.style.animationDelay = Math.random() * 8 + 's';
+            heroParticles.appendChild(particle);
+        }
+    });
+
+    document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape') {
+            closeModal();
+        }
+    });
+</script>
+</body>
+</html>
